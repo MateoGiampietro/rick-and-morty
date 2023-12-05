@@ -1,24 +1,17 @@
 const initialState = {
     myFavorites: [],
-    allCharacters: []
+    allCharacters: [],
+    errors: {}
 };
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type){
         default:
             return {...state};
-        case "ADD_FAV":
-            return {
-                ...state,
-                allCharacters: [...state.allCharacters, action.payload],
-                myFavorites: [...state.allCharacters, action.payload]
-            }
-        case "REMOVE_FAV":
-            return {
-                ...state,
-                allCharacters: state.allCharacters.filter((char) => char.id !== Number(action.payload)),
-                myFavorites: state.allCharacters.filter((char) => char.id !== Number(action.payload))
-            }
+        case 'ADD_FAV':
+            return { ...state, myFavorites: payload, allCharacters: payload };
+        case 'REMOVE_FAV':
+            return { ...state, myFavorites: payload };
         case "FILTER":
             if (action.payload === "All") return {
                 ...state,
@@ -40,6 +33,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 myFavorites: orderCopy
+            }
+        case "ERROR":
+            errors.errors = state.payload;
+            if (errors.hasOwnProperty("errors")) {
+                return errors
             }
     }
 };

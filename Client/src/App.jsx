@@ -2,7 +2,7 @@ import './App.css';
 import Detail from './components/Detail/Detail.jsx';
 import Nav from './components/Nav/Nav.jsx';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from "axios";
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import About from './components/About/About.jsx'
 import Home from './components/Home/Home.jsx'
@@ -17,14 +17,32 @@ function App() {
    const location = useLocation();
    const navigate = useNavigate();
    const [access, setAccess] = useState(false);
-   const EMAIL = 'test@test.com';
-   const PASSWORD = 'pass123';
+   /* const EMAIL = 'test@test.com';
+   const PASSWORD = 'pass123'; */
    const dispatch = useDispatch();
 
-   function login(userData) {
+   /* function login(userData) {
       if (userData.password === PASSWORD && userData.email === EMAIL) {
          setAccess(true);
          navigate('/home');
+      }
+   } */
+
+   async function login(userData) {
+      try {
+         const { email, password } = userData;
+         const URL = 'http://localhost:3001/rickandmorty/login/';
+         const { data } = await axios(URL + `?email=${email}&password=${password}`);
+
+         if (data.access) {
+            setAccess(data.access);
+            navigate("/home");
+         } else {
+            alert("Datos incorrectos.");
+         }
+         
+      } catch (error) {
+         alert(error.message);
       }
    }
 
@@ -32,16 +50,25 @@ function App() {
       !access && navigate('/');
    }, [access]);
 
-   function onSearch(id) {
-      axios(`http://localhost:3001/rickandmorty/character/${id}`).then(
-         ({ data }) => {
-            if (data.name) {
-               setCharacters((oldChars) => [...oldChars, data]);
-            } else {
-               window.alert('¡No hay personajes con este ID!');
-            }
+   async function onSearch(id) {
+      try {
+         const charId = characters.filter(char => char.id === Number(id));
+
+         if (charId.length) {
+            return alert(`${charId[0].name} ya existe!`);
          }
-      );
+         
+         const { data } = await axios(`http://localhost:3001/rickandmorty/character/${id}`);
+         if (data.name) {
+            setCharacters([...characters, data]);
+            navigate("/home");
+         } else {
+            alert("El id debe ser un numero entre 1 y 826");
+         }
+
+      } catch (error) {
+         alert(error.message);
+      }
    }
 
    function onClose(id) {
