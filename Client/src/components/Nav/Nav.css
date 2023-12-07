@@ -1,6 +1,5 @@
 .nav {
     display: flex;
-    border-bottom: 1px solid #000;
     padding: 2px;
     position: fixed;
     top: 0;

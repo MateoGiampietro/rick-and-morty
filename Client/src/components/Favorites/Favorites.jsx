@@ -7,13 +7,12 @@ export default function Favorites({ onClose }) {
     const dispatch = useDispatch();
     const myFavorites = useSelector(state => state.myFavorites);
 
-    const handleOrder = (event) => {
-        dispatch(orderCards(event.target.value))
-    };
-    
-    const handleFilter = (event) => {
-        dispatch(filterCards(event.target.value))
-    };
+    const handleOrder = event => {
+        dispatch(orderCards(event.target.value));
+       }
+    const handleFilter = event => {
+        dispatch(filterCards(event.target.value));
+       }
 
    const cardComponents = myFavorites.map((character) => (
       <Card

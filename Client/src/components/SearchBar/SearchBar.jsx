@@ -15,10 +15,16 @@ export default function SearchBar(props) {
       setId('');
    }
 
+   const handleRandom = () => {
+		const randomNumber = Math.floor(Math.random() * 826) + 1;
+		props.onSearch(randomNumber);
+	};
+
    return (
       <div className='searchBar'>
          <input type='search' onChange={handleChange} value={id}/>
          <button onClick={handleClick}>Agregar</button>
+         <button onClick={handleRandom}>Random</button>
       </div>
    );
 }

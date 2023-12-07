@@ -17,16 +17,7 @@ function App() {
    const location = useLocation();
    const navigate = useNavigate();
    const [access, setAccess] = useState(false);
-   /* const EMAIL = 'test@test.com';
-   const PASSWORD = 'pass123'; */
    const dispatch = useDispatch();
-
-   /* function login(userData) {
-      if (userData.password === PASSWORD && userData.email === EMAIL) {
-         setAccess(true);
-         navigate('/home');
-      }
-   } */
 
    async function login(userData) {
       try {
@@ -67,7 +58,7 @@ function App() {
          }
 
       } catch (error) {
-         alert(error.message);
+         alert("¡El id debe ser un número entre 1 y 826!");
       }
    }
 

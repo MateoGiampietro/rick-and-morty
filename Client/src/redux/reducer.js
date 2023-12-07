@@ -9,9 +9,9 @@ const rootReducer = (state = initialState, action) => {
         default:
             return {...state};
         case 'ADD_FAV':
-            return { ...state, myFavorites: payload, allCharacters: payload };
+            return { ...state, myFavorites: action.payload, allCharacters: action.payload };
         case 'REMOVE_FAV':
-            return { ...state, myFavorites: payload };
+            return { ...state, myFavorites: action.payload, allCharacters: action.payload };
         case "FILTER":
             if (action.payload === "All") return {
                 ...state,
@@ -26,9 +26,9 @@ const rootReducer = (state = initialState, action) => {
             }
         case "ORDER":
             const orderCopy = [...state.myFavorites];
-            if(state.payload === "A")
+            if(state.payload == "A")
                 orderCopy.sort((a, b) => a.id - b.id);
-            if(state.payload === "D")
+            if(state.payload == "D")
                 orderCopy.sort((a, b) => b.id - a.id);
             return {
                 ...state,
