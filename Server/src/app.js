@@ -20,3 +20,5 @@ server.use(express.json());
 server.use(morgan("dev"));
 
 server.use("/rickandmorty", router);
+
+module.exports = server;
